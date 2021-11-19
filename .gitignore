@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+codeFormater/formater.py
+codeFormater/code.html
+codeFormater/result.html
