@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html style="width: 100;">
+<head>
+	<meta charset="utf-8">
+	<title>Генерация QR-кода в JS</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="icon" type="image/jpg" href="https://github.com/frontenders-notes/frontenders-notes.github.io/blob/main/logo.jpg?raw=true"/>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	<style type="text/css">
+		p{
+			text-indent: 20px;
+		}
+
+		.code{
+			background: #F0F1F2;
+			overflow-x: scroll;
+			padding: 15px;
+			border: 1px #DEE2F6 solid;
+			border-top: 0px;
+			max-width: 45vmax;
+		}
+	</style>
+</head>
+<body style="background: linear-gradient(135deg, #FEFEFE, #F9FAFE);">
+	<header class="card-header border-0 bg-dark text-center" >
+		<a href="https://t.me/frontendnoteschannel">
+			<img src="https://github.com/frontenders-notes/frontenders-notes.github.io/blob/main/header_logo.png?raw=true" style="height:  56px;">
+		</a>
+	</header>
+	<div class="p-4 container-fluid">
+		<div class="row">
+			<div name="post" class="flex-column col mb-4">
+				<a href="post_link"> 										<!-- post link here -->
+					<label class="text h2 text-dark mb-4 ">Генерация QR-кода в JS</label>
+				</a>
+				<span class="text mb-5">
+					<p>QR-код — это лучший способ передать большой объем информации в графическом виде. Они используются повсеместно и сегодня вы узнаете как генерировать такой самому.</p>
+					<p>Для генерации QR-кода лучше всего использовать библиотеку <b>QRCode.js</b></p>
+					<p>❗️<code>qrcodeContainer</code> это div элемент, в котором и будет находится сгенерированный QR-код </p>
+				</span>
+				<a class="text text-info text-decoration-none text-sm" href="post_link">
+					<small>🔗Ссылка на пост</small>   <!-- post link here -->
+				</a>
+			</div>
+			<div name="example" class="flex-column col mb-3">
+				<div class="container-fluid">
+					<div class="row col mb-3">
+						<ul class="nav nav-tabs">
+							<li class="nav-item">
+								<a class="nav-link active text-dark border-bottom-0 tab" style="background: #F0F1F2;" aria-current="page" onclick="tabClick(0)">HTML</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active text-dark border-bottom-0 tab" style="background: transparent;" onclick="tabClick(1)">JavaScript</a>
+							</li>	
+						</ul>
+						<div class="code" style="size:inherit;" style="min-width: 50%;">
+							<code id="codearea" style="height: 100%;" class="text-nowrap">
+								
+							</code>
+						</div>
+					</div>
+					<div class="row col">
+						<div style="border: 1px #DEE2F6 solid; border-radius: 4px; padding: 15px;">
+							<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+							<div>
+								<input type="text" name="content" placeholder="Content" id="content">
+								<button onclick="generateQRCode()">Generate</button>
+							</div>
+							<div id="qrcode" class="qrcode" style="margin-top: 10px;"></div>
+    					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		const active = "#F0F1F2";
+		const disabled = "transparent";
+
+		const tabsCode = [
+			'&lt;script&nbsp;src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"&gt;&lt;/script&gt;<br>&lt;div&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type="text"&nbsp;name="content"&nbsp;placeholder="Content"&nbsp;id="content"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;onclick="generateQRCode()"&gt;Generate&lt;/button&gt;<br>&lt;/div&gt;<br>&lt;div&nbsp;id="qrcode"&nbsp;class="qrcode"&nbsp;style="margin-top:&nbsp;10px;"&gt;&lt;/div&gt;<br><br><br><br><br><br>', 
+			'function&nbsp;generateQRCode(){<br>&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;qrcodeContainer&nbsp;=&nbsp;document.getElementById("qrcode");<br>&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;content&nbsp;=&nbsp;document.getElementById("content").value;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;qrcodeContainer.innerHTML&nbsp;=&nbsp;"";<br>&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;QRCode(qrcodeContainer,&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text:&nbsp;content,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width:&nbsp;128,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height:&nbsp;128<br>&nbsp;&nbsp;&nbsp;&nbsp;});<br>}'
+		];
+
+		var tabs = document.getElementsByClassName("tab");
+
+		var code = document.getElementById("codearea");
+
+		function tabClick(id){
+			for (var i = tabs.length - 1; i >= 0; i--) {
+				tabs[i].style["background"] = disabled;
+			}
+
+			tabs[id].style["background"] = active;
+			code.innerHTML = tabsCode[id];
+		}
+
+		tabClick(0);
+
+		function generateQRCode(){
+			let qrcodeContainer = document.getElementById("qrcode");
+			let content = document.getElementById("content").value;
+
+			qrcodeContainer.innerHTML = "";
+			new QRCode(qrcodeContainer, {
+				text: content,
+				width: 128,
+				height: 128
+			});
+		}
+
+		new QRCode(document.getElementById("qrcode"), {
+				text: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				width: 128,
+				height: 128
+			});
+
+	</script>
+</body>
+</html>
